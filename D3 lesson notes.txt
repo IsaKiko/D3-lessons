@@ -1,51 +1,110 @@
 Publish your data using D3
 
 
-Pre-requisits: GH account, GH lesson\
+Prerequisites: GH account, GH lesson
 
-* create local folder
-* create index.html: 
-what does that mean? 
-- basic document type that browsers know how to interpret 
-- source code gets turned into visual components on the screen
-- there are some standart componenents 
+________________________________________________
 
-live code index.html: 
+
+Introduction: Open science should be visible science. And what better
+way to make your research visible and accessible than putting it on the 
+internet. But no one wants to read endless tables of data. We’d rather
+look at graphs, even better, interactive graphs.
+And we have probably all created some graphs. But in order to make them 
+accessible by many people, we will have to move away from our specialised
+software to something everyone can interact with. 
+
+A way of writing that is understood by all web browsers is html: 
+hypertext markup language. Since we don’t have the ability to do 
+logical operations (loops etc) with html alone, it’s strictly speaking 
+not a programming language.
+
+________________________________________________
+
+Displaying text in the browser.
+
+Let’s see how we can get our browser to greet the world. 
+
+—> create local folder
+—> create index.html: 
+—> live code index.html: 
+
 
  <!DOCTYPE html>
-<html> 
+
+<head> 
+</head>
+
+<body> 
+Hello world!
+</body> 
+
+
+The first line tells our browser what kind of file we have. 
+Our document will then have two separate sections:
+
+The header (<head> to open </head> to close) normally
+contains any meta-data. This could be name of the page or
+the inclusion of other files. 
+
+The body (<body> to open </body> to close) is where all our text
+should go. 
+
+
+Since our browser understands this language, we can instantly 
+open our local index.html file and the browser will interpret our
+code as visual components. 
+
+Html has more predefined environments that will vary in size and style. 
+To divide the page into different section, we can create a division 
+using <div> to open and </div> to close it. 
+
+<!DOCTYPE html>
+
 <head> 
 --> meta-data (like page title, inclusion of other files) <--
 </head> 
+
 <body> 
---> Hello world <-- 
+<div> Hello world! <div/>
+<div> Hello back! <div/>
 </body> 
-</html> 
 
-* open index.html in browser.
+Challenge:
+Create a folder that contains the file index.html. (or download it..)
+What seems to be the difference between <div>, <h1>, and <em>?
+Create a heading that is in italics.
 
-Introduce 
-<div> </div>
-<h1> </h1>
-<em> </em>
+________________________________________________
 
-1) Challenge: have a play with index.html
-- Create a heading that is in italics.
+Doing it in style.
 
+The heading has a certain look. This includes the colour, 
+the position, the font size, and many more attributes. 
 
-____________________________________________
+We can change the appearance of our text in different ways. 
+A quick way is to simply mention what we want our element
+to look like the moment we create it setting the “style” attribute.
+If we want to change the colour for example, we write:
 
-Style attributes
+<h1 style="color:blue"> This is a blue heading </h1>
 
-inline first.... 
+Changing the font size: 
+<h1 style=“font-size: 10px“> This is a big heading </h1>
 
-then: we now want to apply this to different elements
+If we want to change two things at the same time, we just mention all of them at once:
+<h1 style=“font-size: 10px; colour: blue“> This is a big heading </h1>
 
+This is a quick and simple way to change the appearance of elements on the spot.
+However, if we want to create different elements of the same type, we have to do a lot of typing, 
+and our file will quickly become confused. 
 
+If we want to change the look of many elements at the same time, we 
+can instead create a style file (extension .css).
 
-Heading has a certain look, if we want something custom, we need a style file, .css-file 
+* create a css file: styles.css
 
-* create a css file 
+In this file, we can define classes, that we can then apply to out elements in the html-file. 
 
 classes: 
 .title
@@ -57,27 +116,67 @@ classes:
 
 --> go back to index, 
 
+All that’s left to do, is to tell the html file where to find out new .css file. This is done 
+by linking to it in the head: 
+
  <!DOCTYPE html>
 <html> 
 <head> 
---> meta-data (like page title, inclusion of other files) <--
+<link rel="stylesheet" type="text/css" href="css/styles.css>
 </head> 
+
+…
+
+in the body, we can use the class, that we just created:
+
+
 <body> 
-<div class="title"> --> Hello world <-- </div>
+<div class="title"> First title </div>
+<div> some text </div>
+<div class="title"> And another title </div>
 </body> 
 </html> 
 
-2nd challenge) 
+
+
+
+Challenge
 Create a class called description. 
 Left bound, dark grey, font size, certain width on the page, padding around
 ...also, write some text so it wraps around.
+If you like, play with the heading, until you like how it looks. 
 2b for quicker people) set bg of body to purple and text to white
 
 
-_______________________________________________
+—>instructors update their style file, too, since this is needed for the rest of the class
+after challenge, explain solution. 
+
+
+________________________________________________
+
 Inspecting things in the browser. 
 
-_______________________________________________ 
+So now, we have created class “description”.
+Every element in this class has a certain amount of padding around the edge.
+Since our browser is good at interpreting everything instantly, we can simply change a value, 
+save the file, and refresh our page. 
+
+However, most browsers today also let you peek into and change the code while you are on a website. 
+We can use this to find out which value for padding looks best, by simply changing it straight on the page. 
+
+—> live demo: changing padding of one element, inspecting other elements.
+
+The amazing thing is, that we can not only do that on our page, but on every page on the internet. 
+So if we find a colour we like, we can simply inspect the element and copy the value! 
+
+This gives us a preview only and we will still have to copy and paste the line into our own file. 
+
+
+Challenge: Go to your favourite webpage and steal a colour that would look good for your heading.  
+
+________________________________________________ 
+
+Displaying graphical components. 
 
 The plots we want to make will be made up of graphical objects like lines, circles, and squares, not only text. 
 why not images? scalable, less data
@@ -108,7 +207,7 @@ fill: white;
 stroke-width: 5;
 }
 
-3rd challenge:
+Challenge:
 Make some art, using at least one circle, one rectangle, and one polygon
 If you don't know what to do, draw a robot! 
 
@@ -119,11 +218,22 @@ If you don't know what to do, draw a robot!
 
 ________________________________________________
 
-Publish your art! 
+Publishing art on the web!  
 ...using github
 
 
-_______________________________________________
+
+
+
+Challenge:
+Publish your artwork! 
+
+________________________________________________
+
+
+- - - - — - - End of day one - - - - - - - - - -
+
+________________________________________________
 
 now we want to interact with the page, e.g. 
 
