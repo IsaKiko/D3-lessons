@@ -1,0 +1,143 @@
+Publish your data using D3
+
+
+Pre-requisits: GH account, GH lesson\
+
+* create local folder
+* create index.html: 
+what does that mean? 
+- basic document type that browsers know how to interpret 
+- source code gets turned into visual components on the screen
+- there are some standart componenents 
+
+live code index.html: 
+
+ <!DOCTYPE html>
+<html> 
+<head> 
+--> meta-data (like page title, inclusion of other files) <--
+</head> 
+<body> 
+--> Hello world <-- 
+</body> 
+</html> 
+
+* open index.html in browser.
+
+Introduce 
+<div> </div>
+<h1> </h1>
+<em> </em>
+
+1) Challenge: have a play with index.html
+- Create a heading that is in italics.
+
+
+____________________________________________
+
+Style attributes
+
+inline first.... 
+
+then: we now want to apply this to different elements
+
+
+
+Heading has a certain look, if we want something custom, we need a style file, .css-file 
+
+* create a css file 
+
+classes: 
+.title
+{
+	color: red;
+	font-size: 10px;
+	text-align: center;
+}
+
+--> go back to index, 
+
+ <!DOCTYPE html>
+<html> 
+<head> 
+--> meta-data (like page title, inclusion of other files) <--
+</head> 
+<body> 
+<div class="title"> --> Hello world <-- </div>
+</body> 
+</html> 
+
+2nd challenge) 
+Create a class called description. 
+Left bound, dark grey, font size, certain width on the page, padding around
+...also, write some text so it wraps around.
+2b for quicker people) set bg of body to purple and text to white
+
+
+_______________________________________________
+Inspecting things in the browser. 
+
+_______________________________________________ 
+
+The plots we want to make will be made up of graphical objects like lines, circles, and squares, not only text. 
+why not images? scalable, less data
+
+SVGs do that! 
+
+svg = scalable vector graphic
+in html, it's used as an element, just like <div> etc. 
+
+it has a height and a width and 
+
+
+<svg class="chart">
+   	<circle cx="25" cy="25" r="15" class="circle">
+   	</cirlce>
+</svg>
+
+
+in css: 
+.chart {
+width: 100px;
+height: 100px;
+}
+
+.circle {
+stroke: green; 
+fill: white;
+stroke-width: 5;
+}
+
+3rd challenge:
+Make some art, using at least one circle, one rectangle, and one polygon
+If you don't know what to do, draw a robot! 
+
+
+
+
+- discussion about where to put styles.. 
+
+________________________________________________
+
+Publish your art! 
+...using github
+
+
+_______________________________________________
+
+now we want to interact with the page, e.g. 
+
+
+________________________________________________
+
+java script / d3
+
+
+
+
+
+
+
+
+...buttons and ranges right before javascript 
+
