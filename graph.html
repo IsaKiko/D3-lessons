@@ -54,7 +54,7 @@ text {
 
 <h1>The Wealth & Health of Nations</h1>
 
-<p id="chart"></p>
+<p id="chart"> <svg> </svg> </p>
 
 <aside>Mouseover the year to move forward and backwards through time.</aside>
 
@@ -75,7 +75,15 @@ text {
 <script>
 
 // Various accessors that specify the four dimensions of data to visualize.
-function x(d) { return d.income; }
+
+function x(d) { 
+  return d.income; 
+} 
+
+// var x = function(d) { return d.income; };
+// var obj = { a: x };
+// obj.x(d)
+
 function y(d) { return d.lifeExpectancy; }
 function radius(d) { return d.population; }
 function color(d) { return d.region; }
@@ -97,11 +105,24 @@ var xAxis = d3.svg.axis().orient("bottom").scale(xScale).ticks(12, d3.format(",d
     yAxis = d3.svg.axis().scale(yScale).orient("left");
 
 // Create the SVG container and set the origin.
-var svg = d3.select("#chart").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+var chart = d3.select("#chart");
+
+var svg_canvas = chart.append("svg");
+
+svg_canvas.style("background-color", "lightgray");
+svg_canvas.attr("width", width + margin.left + margin.right);
+svg_canvas.attr("height", height + margin.top + margin.bottom);
+
+var svg = svg_canvas.append("g");
+svg.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+
+// var svg = d3.select("#chart").append("svg")
+//     .attr("width", width + margin.left + margin.right)
+//     .attr("height", height + margin.top + margin.bottom)
+//     .append("g")
+//     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 // Add the x-axis.
 svg.append("g")

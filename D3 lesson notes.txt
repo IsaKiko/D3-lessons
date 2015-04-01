@@ -235,19 +235,100 @@ ________________________________________________
 
 ________________________________________________
 
-now we want to interact with the page, e.g. 
+We’ve already made some art. But we might want to 
+interact with it and compute values.
+And the best way to do this is to use javascript. 
+Everything in javascript evolves around objects.
+
+________________________________________________
+
+
+Creating objects
+
+In order to create an object, we have to declare it 
+first. 
+
+var object = {};
+creates the object. But so far it’s empty. 
+
+We can now fill this object.
+A simple vector assigning numbers to the first three elements 
+could look like this:
+var object = {0: 45, 1: 43, 2:32};
+
+Let’s use the console of the browser to look at the values of object
+by including some extra code:
+
+console. ??? (object)
+
+Different from many other programming languages, 
+javascript objects are very versatile and you don’t have to 
+call fields through their indices, but can give them names. 
+So let’s create something more meaningful:
+
+var animal = {};
+animal.weight = 5;
+animal.height = 30;
+
+And each new field can have nested fields, too.
+
+var animal = {};
+animal.cat.weight = 5;
+animal.cat.height = 30;
+animal.duck.weight = 1;
+animal.duck.legs = 2;
+
+Challenge: 
+Create a nested object including three animals.
+Do all animals have to have the same nested fields?
+Use the console of your browser to read the values of your object. 
+
+________________________________________________
+
+Functions
+
+. . .
 
 
 ________________________________________________
 
-java script / d3
+Objects can have functions?! 
+
+Our cat does not only have legs and a weight, but can also eat.
 
 
 
 
+________________________________________________
+
+
+When it eats too much, it might gain weight…
 
 
 
+________________________________________________
 
-...buttons and ranges right before javascript 
+We’ve already used console.something 
+
+Surprise! This was an object already and is one example for a predefined
+object that already has fields and functions. 
+
+Another example of a predefined object is document.
+
+click-code! (if necessary?!)
+
+
+________________________________________________
+
+There is a way to also import objects that others
+have already defined. Again, these come with attributes, 
+styles, and functions. These objects come pre—packed in libraries.
+
+And the library we want to look at is called d3.
+To make it available to our webpage, we have to load it in the 
+head of the html-document:
+
+.. code ..
+
+________________________________________________
 
