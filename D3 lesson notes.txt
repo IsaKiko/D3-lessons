@@ -254,33 +254,39 @@ creates the object. But so far it’s empty.
 We can now fill this object.
 A simple vector assigning numbers to the first three elements 
 could look like this:
-var object = {0: 45, 1: 43, 2:32};
+var object = {0: 45, 1: 43, 2: 32};
 
 Let’s use the console of the browser to look at the values of object
 by including some extra code:
 
-console. ??? (object)
+console.log(object)
 
 Different from many other programming languages, 
 javascript objects are very versatile and you don’t have to 
 call fields through their indices, but can give them names. 
 So let’s create something more meaningful:
 
-var animal = {};
-animal.weight = 5;
-animal.height = 30;
+var cat_object = {};
+cat_object.species = 'cat';
+cat_object.weight = 5;
+cat_object.height = 30;
+cat_object.name = 'Princess Caroline';
 
-And each new field can have nested fields, too.
+Now we want to have 5 different animals, so we
+create an array of animals:
 
-var animal = {};
-animal.cat.weight = 5;
-animal.cat.height = 30;
-animal.duck.weight = 1;
-animal.duck.legs = 2;
+(don't type this. pseudo code)
+animals = [cat_object, dog_object, duck_object];
+
+animals[1] = {species ='dog' , height = 30 , weight = 6 , name = 'Mr Peanut Butter' }
+
+animals[1]
+--> dog_object;
+
 
 Challenge: 
 Create a nested object including three animals.
-Do all animals have to have the same nested fields?
+Do all animals have to have the same keys?
 Use the console of your browser to read the values of your object. 
 
 ________________________________________________
@@ -304,6 +310,15 @@ ________________________________________________
 
 When it eats too much, it might gain weight…
 
+--> return value nigth be weight gain 
+
+function eat(one_specific_animal){
+one_specific_animal.weight = one_specific_animal.weight+5;
+return 'omnomom';}
+
+eat(animals[0])
+-->  cat gets fat.
+--> 'omnomnom'
 
 
 ________________________________________________
