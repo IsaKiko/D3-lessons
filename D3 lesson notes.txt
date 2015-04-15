@@ -332,6 +332,9 @@ Another example of a predefined object is document.
 
 click-code! (if necessary?!)
 
+we want: button to feed cat, cat image gets stretched horizontally 
+THIS IS THE CAT 
+http://www.pageresource.com/wallpapers/wallpaper/free-bored-cat_584823.jpg
 
 ________________________________________________
 
@@ -346,4 +349,46 @@ head of the html-document:
 .. code ..
 
 ________________________________________________
+
+
+
+
+D3 - what we want to have:
+
+wtf is D3?
+why use it.
+
+5 countries with similar population  
+10 time steps, every 5 years, last 50 years
+no colour 
+
+size: population
+y: life expectancy
+x: income per capita
+
+1) create axes
+2) load data (do we need to introduce .json file format here? back to the CAT)
+3) scatter plot, one time, no population
+___challenge: radius = population
+4) radius = population
+5) tool tips: country names
+___challenge: colour code - all separate colours? 
+
+
+
+6) button, time step - update data??? <-- this introduces 1 new concept: D3
+
+
+D3 page: how do I get the plot I want?
+
+
+
+
+________________________________
+
+Keep everything in the html file?
+Where do I find more information? Google / stackoverflow / template: D3 blah
+
+
+
 
