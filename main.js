@@ -1,197 +1,77 @@
-
-// Various accessors that specify the four dimensions of data to visualize.
-
-function x(d) { 
-  return d.income; 
-} 
-
-// var x = function(d) { return d.income; };
-// var obj = { a: x };
-// obj.x(d)
-
-function y(d) { return d.lifeExpectancy; }
-function radius(d) { return d.population; }
-function color(d) { return d.region; }
-function key(d) { return d.name; }
-
-// Chart dimensions.
-var margin = {top: 19.5, right: 19.5, bottom: 19.5, left: 39.5},
-    width = 960 - margin.right,
-    height = 500 - margin.top - margin.bottom;
-
-// Various scales. These domains make assumptions of data, naturally.
-var xScale = d3.scale.log().domain([300, 1e5]).range([0, width]),
-    yScale = d3.scale.linear().domain([10, 85]).range([height, 0]),
-    radiusScale = d3.scale.sqrt().domain([0, 5e8]).range([0, 40]),
-    colorScale = d3.scale.category10();
-
-// The x & y axes.
-var xAxis = d3.svg.axis().orient("bottom").scale(xScale).ticks(12, d3.format(",d")),
-    yAxis = d3.svg.axis().scale(yScale).orient("left");
-
-// Create the SVG container and set the origin.
-var chart = d3.select("#chart");
-
-var svg_canvas = chart.append("svg");
-
-// svg_canvas.style("background-color", "lightgray");
-svg_canvas.attr("width", width + margin.left + margin.right);
-svg_canvas.attr("height", height + margin.top + margin.bottom);
-
-var svg = svg_canvas.append("g");
-svg.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-// Add the x-axis.
-svg.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
-    .call(xAxis);
-
-// Add the y-axis.
-svg.append("g")
-    .attr("class", "y axis")
-    .call(yAxis);
-
-// Add an x-axis label.
-svg.append("text")
-    .attr("class", "x label")
-    .attr("text-anchor", "end")
-    .attr("x", width)
-    .attr("y", height - 6)
-    .text("income per capita, inflation-adjusted (dollars)");
-
-// Add a y-axis label.
-svg.append("text")
-    .attr("class", "y label")
-    .attr("text-anchor", "end")
-    .attr("y", 6)
-    .attr("dy", ".75em")
-    .attr("transform", "rotate(-90)")
-    .text("life expectancy (years)");
-
-// Add the year label; the value is set on transition.
-var label = svg.append("text")
-    .attr("class", "year label")
-    .attr("text-anchor", "end")
-    .attr("y", height - 24)
-    .attr("x", width)
-    .text(1800);
-
 // Load the data.
 d3.json("nations.json", function(nations) {
 
-  // A bisector since many nation's data is sparsely-defined.
-  var bisect = d3.bisector(function(d) { return d[0]; });
 
-  // Add a dot per nation. Initialize the data at 1800, and set the colors.
-  var dot = svg.append("g")
-      .attr("class", "dots")
-    .selectAll(".dot")
-      .data(interpolateData(1800))
-    .enter().append("circle")
-      .attr("class", "dot")
-      .style("fill", function(d) { return colorScale(color(d)); })
-      .call(position)
-      .sort(order);
+	// Create the SVG container inside chart element.
+	var chart_area = d3.select("#chart_area");
+	var svg = chart_area.append("svg");
 
-  // Add a title.
-  dot.append("title")
-      .text(function(d) { return d.name; });
 
-  // Add an overlay for the year label.
-  var box = label.node().getBBox();
+	// Set margins, width, and height.
+	var margin = {top: 19.5, right: 19.5, bottom: 19.5, left: 39.5};
+	var svg_width = 960;
+	var svg_height = 350;
+	var chart_width = svg_width - margin.left - margin.right;
+	var chart_height = svg_height - margin.top - margin.bottom;
 
-  var overlay = svg.append("rect")
-        .attr("class", "overlay")
-        .attr("x", box.x)
-        .attr("y", box.y)
-        .attr("width", box.width)
-        .attr("height", box.height)
-        .on("mouseover", enableInteraction);
+	// innerHeight and innerWidth are how much axes will be shifted in so there is
 
-  // Start a transition that interpolates the data based on year.
-  svg.transition()
-      .duration(30000)
-      .ease("linear")
-      .tween("year", tweenYear)
-      .each("end", enableInteraction);
 
-  // Positions the dots based on data.
-  function position(dot) {
-    dot .attr("cx", function(d) { return xScale(x(d)); })
-        .attr("cy", function(d) { return yScale(y(d)); })
-        .attr("r", function(d) { return radiusScale(radius(d)); });
-  }
+	// Set svg attributes width and height.
+	svg.attr("width", svg_width);
+	svg.attr("height", svg_height);
 
-  // Defines a sort order so that the smallest dots are drawn on top.
-  function order(a, b) {
-    return radius(b) - radius(a);
-  }
 
-  // After the transition finishes, you can mouseover to change the year.
-  function enableInteraction() {
-    var yearScale = d3.scale.linear()
-        .domain([1800, 2009])
-        .range([box.x + 10, box.x + box.width - 10])
-        .clamp(true);
+	// Create chart inside svg element.
+	var chart = svg.append("g");
 
-    // Cancel the current transition, if any.
-    svg.transition().duration(0);
 
-    overlay
-        .on("mouseover", mouseover)
-        .on("mouseout", mouseout)
-        .on("mousemove", mousemove)
-        .on("touchmove", mousemove);
+	// Shift the chart and make it slightly smaller than the svg canvas.
+	chart.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    function mouseover() {
-      label.classed("active", true);
-    }
 
-    function mouseout() {
-      label.classed("active", false);
-    }
+	// Various scales. These domains make assumptions of data, naturally.
+	var xScale = d3.scale.log(); // income
+	xScale.domain([300, 1e5]);
+	xScale.range([0, chart_width]);  
 
-    function mousemove() {
-      displayYear(yearScale.invert(d3.mouse(this)[0]));
-    }
-  }
+    
+    // d3 has a subobject called scale. within scale, there are a number of functions to create scales.
+    // e.g. log, linear, sqrt, category10 (e.g. 10 different colours)... 
+    // we set the domain based on our data - min and max of the data
+    // we set the range - range on the page
+    // domain, range, log scale all determing data values are mapped to graph positions.
 
-  // Tweens the entire chart by first tweening the year, and then the data.
-  // For the interpolated data, the dots and label are redrawn.
-  function tweenYear() {
-    var year = d3.interpolateNumber(1800, 2009);
-    return function(t) { displayYear(year(t)); };
-  }
+    var yScale = d3.scale.linear().domain([10, 85]).range([chart_height, 0]);  // life expectancy
 
-  // Updates the display to show the specified year.
-  function displayYear(year) {
-    dot.data(interpolateData(year), key).call(position).sort(order);
-    label.text(Math.round(year));
-  }
+    // an alternative notation that d3 offers is to chain everything together using the dot-syntax 
+    // (you'll see this a lot). The order is mostly arbitrary. 
 
-  // Interpolates the dataset for the given (fractional) year.
-  function interpolateData(year) {
-    return nations.map(function(d) {
-      return {
-        name: d.name,
-        region: d.region,
-        income: interpolateValues(d.income, year),
-        population: interpolateValues(d.population, year),
-        lifeExpectancy: interpolateValues(d.lifeExpectancy, year)
-      };
-    });
-  }
 
-  // Finds (and possibly interpolates) the value for the specified year.
-  function interpolateValues(values, year) {
-    var i = bisect.left(values, year, 0, values.length - 1),
-        a = values[i];
-    if (i > 0) {
-      var b = values[i - 1],
-          t = (year - a[0]) / (b[0] - a[0]);
-      return a[1] * (1 - t) + b[1] * t;
-    }
-    return a[1];
-  }
+	// Creating the x & y axes.
+	var xAxis = d3.svg.axis().orient("bottom").scale(xScale);
+    var yAxis = d3.svg.axis().scale(yScale).orient("left");
+
+
+    // Next step: push the axes into the chart
+
+
+	// Add the x-axis.
+	chart.append("g")
+	.attr("class", "x axis")
+    .attr("transform", "translate(0," + chart_height + ")")
+    .call(xAxis);
+
+    // .call is the bit where the properties we just set are pushed to the object
+    // attribures are added to make it look pretty (class is used in the css file)
+
+
+	// Add the y-axis.
+	chart.append("g")
+    .attr("class", "y axis")
+    .call(yAxis);
+
+
+
+
 });
